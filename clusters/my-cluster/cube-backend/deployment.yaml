@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cube-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cube-backend
+  template:
+    metadata:
+      labels:
+        app: cube-backend
+    spec:
+      containers:
+      - name: cube-backend
+        image: ghcr.io/hashgo44/cube-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+          - name: DATABASE_URL
+            value: "postgresql+psycopg://postgres:password@postgresql-access:5432/postgres"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
