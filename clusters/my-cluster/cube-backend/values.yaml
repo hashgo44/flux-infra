@@ -18,8 +18,8 @@ container:
   port: 8000
 
 env:
-  # Le service PostgreSQL créé par Bitnami sera: <release-name>-postgresql
-  # Dans notre cas: cube-backend-postgresql
+  # PostgreSQL déployé via Helm (Bitnami)
+  # Le service sera: <release-name>-postgresql = cube-backend-postgresql
   databaseUrl: "postgresql+psycopg://postgres:password@cube-backend-postgresql:5432/postgres"
 
 resources:
@@ -34,9 +34,7 @@ resources:
 postgresql:
   enabled: true
   image:
-    registry: docker.io
-    repository: bitnami/postgresql
-    tag: "latest"
+    tag: "latest"  # Utilise la dernière image disponible
   auth:
     postgresPassword: "password"
     database: "postgres"
@@ -44,7 +42,7 @@ postgresql:
     persistence:
       enabled: true
       size: 10Gi
-      storageClass: ""  # Utilise la StorageClass par défaut du cluster
+      storageClass: ""
 
 # ---- Le reste du fichier ----
 
