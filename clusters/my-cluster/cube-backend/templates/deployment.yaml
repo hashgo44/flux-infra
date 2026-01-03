@@ -20,7 +20,6 @@ spec:
       {{- end }}
       labels:
         {{- include "cube-backend.labels" . | nindent 8 }}
-        {{- include "cube-backend.selectorLabels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
