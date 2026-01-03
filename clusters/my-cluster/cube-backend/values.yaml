@@ -34,7 +34,9 @@ resources:
 postgresql:
   enabled: true
   image:
-    tag: "16.6.0-debian-12-r1"  # PostgreSQL 16 stable
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: "latest"
   auth:
     postgresPassword: "password"
     database: "postgres"
