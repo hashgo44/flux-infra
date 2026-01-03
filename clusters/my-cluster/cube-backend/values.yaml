@@ -3,7 +3,7 @@
 name: cube-backend
 namespace: default
 
-replicaCount: 2  # remplace "replicas"
+replicaCount: 2
 
 image:
   repository: ghcr.io/hashgo44/cube-backend
@@ -12,13 +12,15 @@ image:
 
 service:
   type: ClusterIP
-  port: 8000  # remplace 80
+  port: 8000
 
 container:
-  port: 8000  # correspond à containerPort
+  port: 8000
 
 env:
-  databaseUrl: "postgresql+psycopg://postgres:password@postgresql-access:5432/postgres"
+  # Le service PostgreSQL créé par Bitnami sera: <release-name>-postgresql
+  # Dans notre cas: cube-backend-postgresql
+  databaseUrl: "postgresql+psycopg://postgres:password@cube-backend-postgresql:5432/postgres"
 
 resources:
   limits:
@@ -28,7 +30,19 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-# ---- Le reste du fichier est inchangé ----
+# ---- PostgreSQL (Bitnami) ----
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "password"
+    database: "postgres"
+  primary:
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: "standard"
+
+# ---- Le reste du fichier ----
 
 imagePullSecrets: []
 nameOverride: ""

@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - flux-system
   - cube-backend-helmrelease.yaml
-  - postgresql-kustomization.yaml
 
