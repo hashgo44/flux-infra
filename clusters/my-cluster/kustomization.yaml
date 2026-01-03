@@ -4,3 +4,4 @@ resources:
   - flux-system
   - cube-backend-helmrelease.yaml
   - postgresql-kustomization.yaml
+
