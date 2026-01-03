@@ -40,7 +40,7 @@ postgresql:
     persistence:
       enabled: true
       size: 10Gi
-      storageClass: "standard"
+      storageClass: ""  # Utilise la StorageClass par défaut du cluster
 
 # ---- Le reste du fichier ----
 
