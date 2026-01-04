@@ -8,7 +8,7 @@ replicaCount: 2
 image:
   repository: ghcr.io/hashgo44/cube-backend
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "latest"  # {"$imagepolicy": "flux-system:cube-backend:tag"}
 
 service:
   type: ClusterIP
@@ -35,7 +35,6 @@ postgresql:
   enabled: true
   image:
     # Digest fixe pour la reproductibilité (PostgreSQL 18.1 - capturé le 2026-01-03)
-    # Pour mettre à jour: kubectl get pod <postgresql-pod> -o jsonpath='{.status.containerStatuses[0].imageID}'
     digest: "sha256:2a7dbbb704430870c9f4e76ccf2a532dd0c6be99774d0cb064e0e5b9c6889db1"
   auth:
     postgresPassword: "password"

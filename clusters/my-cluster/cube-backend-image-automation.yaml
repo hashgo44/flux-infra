@@ -1,0 +1,58 @@
+---
+# ImageRepository - Surveille le registry GHCR pour les nouvelles images
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: cube-backend
+  namespace: flux-system
+spec:
+  image: ghcr.io/hashgo44/cube-backend
+  interval: 1m  # Vérifie toutes les minutes
+  # GHCR public - pas besoin de credentials
+
+---
+# ImagePolicy - Sélectionne quelle image utiliser
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: cube-backend
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: cube-backend
+  # Filtre les tags au format: main-<commit>-<timestamp>
+  filterTags:
+    pattern: '^main-[a-f0-9]+-(?P<ts>[0-9]+)$'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: desc  # Le plus grand timestamp = le plus récent
+
+---
+# ImageUpdateAutomation - Met à jour automatiquement le repo Git
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: cube-backend
+  namespace: flux-system
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: |
+        chore(flux): update cube-backend to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./clusters/my-cluster
+    strategy: Setters
+
