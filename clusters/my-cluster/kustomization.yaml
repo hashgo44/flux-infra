@@ -3,5 +3,7 @@ kind: Kustomization
 resources:
   - flux-system
   - cube-backend-helmrelease.yaml
+  - cube-frontend-helmrelease.yaml
   - cube-backend-image-automation.yaml
+  - cube-frontend-image-automation.yaml
 
