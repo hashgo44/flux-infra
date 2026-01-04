@@ -8,10 +8,10 @@ spec:
   chart:
     spec:
       chart: ./clusters/my-cluster/cube-backend
-      reconcileStrategy: ChartVersion
+      reconcileStrategy: Revision  # Redéploie à chaque commit Git (values.yaml inclus)
       sourceRef:
         kind: GitRepository
         name: flux-system
-  interval: 30m0s
+  interval: 5m0s  # Vérifie plus souvent
   storageNamespace: default
   targetNamespace: default
