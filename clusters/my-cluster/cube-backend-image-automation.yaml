@@ -22,11 +22,11 @@ spec:
     name: cube-backend
   # Filtre les tags au format: main-<commit>-<timestamp>
   filterTags:
-    pattern: '^main-[a-zA-Z0-9]+-(?P<ts>[0-9]+)$'
+    pattern: '^main-[a-zA-Z0-9]+-(?P<ts>.*)$'
     extract: '$ts'
   policy:
     numerical:
-      order: desc  # Le plus grand timestamp = le plus récent
+      order: asc  # TEST: essayons l'inverse pour voir
 
 ---
 # ImageUpdateAutomation - Met à jour automatiquement le repo Git
