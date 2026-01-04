@@ -2,26 +2,20 @@
 
 name: cube-backend
 namespace: default
-
 replicaCount: 2
-
 image:
   repository: ghcr.io/hashgo44/cube-backend
   pullPolicy: IfNotPresent
-  tag: "latest"  # {"$imagepolicy": "flux-system:cube-backend:tag"}
-
+  tag: "main-cb7d8c9-1767546335" # {"$imagepolicy": "flux-system:cube-backend:tag"}
 service:
   type: ClusterIP
   port: 8000
-
 container:
   port: 8000
-
 env:
   # PostgreSQL déployé via Helm (Bitnami)
   # Le service est: <release-name>-postgresql = default-cube-backend-postgresql
   databaseUrl: "postgresql+psycopg://postgres:password@default-cube-backend-postgresql:5432/postgres"
-
 resources:
   limits:
     cpu: 500m
@@ -29,7 +23,6 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
-
 # ---- PostgreSQL (Bitnami) ----
 postgresql:
   enabled: true
@@ -44,25 +37,19 @@ postgresql:
       enabled: true
       size: 10Gi
       storageClass: ""
-
 # ---- Le reste du fichier ----
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
 serviceAccount:
   create: true
   automount: true
   annotations: {}
   name: ""
-
 podAnnotations: {}
 podLabels: {}
-
 podSecurityContext: {}
 securityContext: {}
-
 ingress:
   enabled: false
   className: ""
@@ -73,21 +60,19 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-
 httpRoute:
   enabled: false
   annotations: {}
   parentRefs:
-  - name: gateway
-    sectionName: http
+    - name: gateway
+      sectionName: http
   hostnames:
-  - chart-example.local
+    - chart-example.local
   rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /headers
-
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /headers
 livenessProbe:
   httpGet:
     path: /
@@ -96,16 +81,13 @@ readinessProbe:
   httpGet:
     path: /
     port: http
-
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-
 volumes: []
 volumeMounts: []
-
 nodeSelector: {}
 tolerations: []
 affinity: {}
