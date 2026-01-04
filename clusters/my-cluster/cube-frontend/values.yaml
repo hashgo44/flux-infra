@@ -1,5 +1,7 @@
 # Default values for cube-frontend.
 
+name: cube-frontend
+namespace: default
 replicaCount: 2
 
 image:

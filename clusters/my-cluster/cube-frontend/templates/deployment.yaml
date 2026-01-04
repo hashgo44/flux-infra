@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cube-frontend.fullname" . }}
+  name: {{ .Values.name | default (include "cube-frontend.fullname" .) }}
+  namespace: {{ .Values.namespace | default "default" }}
   labels:
     {{- include "cube-frontend.labels" . | nindent 4 }}
 spec:
@@ -33,7 +34,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.name | default .Chart.Name }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
