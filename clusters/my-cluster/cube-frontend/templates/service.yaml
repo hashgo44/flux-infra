@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.name | default (include "cube-backend.fullname" .) }}g
+  name: {{ .Values.service.name | default (include "cube-frontend.fullname" .) }}
   labels:
     {{- include "cube-frontend.labels" . | nindent 4 }}
 spec:
