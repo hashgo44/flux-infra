@@ -8,6 +8,7 @@ image:
   pullPolicy: IfNotPresent
   tag: "main-a4f772f-1767552391" # {"$imagepolicy": "flux-system:cube-backend:tag"}
 service:
+  name: cube-backend-service
   type: ClusterIP
   port: 8000
 container:
