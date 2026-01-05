@@ -1,9 +1,23 @@
+# =============================================================================
+# KUSTOMIZATION - Point d'entrée Flux pour ce cluster
+# =============================================================================
+# Ce fichier liste toutes les ressources que Flux doit appliquer au cluster.
+# Flux réconcilie ces ressources dans l'ordre où elles sont listées.
+#
+# ARCHITECTURE:
+# - flux-system/        → Configuration de base de Flux (GitRepository, etc.)
+# - *-helmrelease.yaml  → Déploiement des applications via Helm
+# - *-image-automation.yaml → Automatisation des mises à jour d'images
+# =============================================================================
+
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # Configuration Flux (GitRepository, Kustomization controller, etc.)
   - flux-system
+  # HelmReleases - Déploient les charts Helm des applications
   - cube-backend-helmrelease.yaml
   - cube-frontend-helmrelease.yaml
+  # Image Automation - Surveillent les registries et mettent à jour les tags
   - cube-backend-image-automation.yaml
   - cube-frontend-image-automation.yaml
-

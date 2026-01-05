@@ -1,58 +1,107 @@
+# =============================================================================
+# FLUX IMAGE AUTOMATION - cube-backend
+# =============================================================================
+# Ce fichier configure l'automatisation des mises à jour d'images Docker.
+# Flux surveille le registry, détecte les nouvelles images, et met à jour
+# automatiquement le fichier values.yaml avec le nouveau tag.
+#
+# FLUX DE TRAVAIL:
+# 1. ImageRepository → Surveille GHCR pour les nouvelles images
+# 2. ImagePolicy     → Filtre et sélectionne la meilleure image (la plus récente)
+# 3. ImageUpdateAutomation → Commit automatique du nouveau tag dans Git
+# 4. HelmRelease (autre fichier) → Détecte le commit et redéploie
+# =============================================================================
+
 ---
-# ImageRepository - Surveille le registry GHCR pour les nouvelles images
+# =============================================================================
+# ImageRepository - SURVEILLANCE DU REGISTRY
+# =============================================================================
+# Interroge périodiquement le registry Docker (GHCR) pour lister tous les tags
+# disponibles pour l'image spécifiée. Ces tags sont ensuite utilisés par
+# l'ImagePolicy pour sélectionner la version à déployer.
+# =============================================================================
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: cube-backend
   namespace: flux-system
 spec:
+  # URL complète de l'image Docker (sans le tag)
   image: ghcr.io/hashgo44/cube-backend
-  interval: 1m  # Vérifie toutes les minutes
-  # GHCR public - pas besoin de credentials
+  # Fréquence de vérification du registry
+  # Plus l'intervalle est court, plus vite les nouvelles images sont détectées
+  interval: 1m
 
 ---
-# ImagePolicy - Sélectionne quelle image utiliser
+# =============================================================================
+# ImagePolicy - SÉLECTION DE L'IMAGE
+# =============================================================================
+# Définit les règles pour choisir quelle image déployer parmi toutes celles
+# disponibles dans le registry. Utilise des regex pour filtrer et extraire
+# des informations des tags (comme le timestamp).
+# =============================================================================
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: cube-backend
   namespace: flux-system
 spec:
+  # Référence à l'ImageRepository qui fournit la liste des tags
   imageRepositoryRef:
     name: cube-backend
-  # Filtre les tags au format: main-<commit>-<timestamp>
+  # Filtrage des tags avec une expression régulière
   filterTags:
+    # Pattern: main-<commit-sha>-<timestamp>
+    # Exemple: main-a4f772f-1767552391
     pattern: '^main-[a-zA-Z0-9]+-(?P<ts>.*)$'
+    # Extrait le timestamp pour le tri
     extract: '$ts'
+  # Politique de sélection
   policy:
+    # Tri numérique par timestamp (ascending = le plus grand = le plus récent)
     numerical:
-      order: asc  # TEST: essayons l'inverse pour voir
+      order: asc
 
 ---
-# ImageUpdateAutomation - Met à jour automatiquement le repo Git
+# =============================================================================
+# ImageUpdateAutomation - MISE À JOUR AUTOMATIQUE DU GIT
+# =============================================================================
+# Quand une nouvelle image est sélectionnée par l'ImagePolicy, ce composant
+# met à jour automatiquement les fichiers YAML du repo Git avec le nouveau tag.
+# Il cherche les marqueurs {"$imagepolicy": "..."} dans les fichiers.
+# =============================================================================
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: cube-backend
   namespace: flux-system
 spec:
+  # Fréquence de vérification des mises à jour à appliquer
   interval: 1m
+  # Référence au GitRepository Flux (contient l'URL et les credentials)
   sourceRef:
     kind: GitRepository
     name: flux-system
   git:
+    # Configuration du checkout
     checkout:
       ref:
         branch: main
+    # Configuration du commit automatique
     commit:
       author:
         name: fluxcdbot
         email: fluxcdbot@users.noreply.github.com
+      # Template du message de commit
+      # {{range .Changed.Changes}}{{println .NewValue}}{{end}} = nouveau tag
       messageTemplate: |
         chore(flux): update cube-backend to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
+    # Push automatique sur la branche
     push:
       branch: main
   update:
+    # Chemin où chercher les fichiers à mettre à jour
     path: ./clusters/my-cluster
+    # Stratégie "Setters" : cherche les marqueurs {"$imagepolicy": "..."}
+    # dans les fichiers YAML et remplace la valeur adjacente
     strategy: Setters
-

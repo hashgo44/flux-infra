@@ -15,7 +15,6 @@ container:
   port: 8000
 env:
   # PostgreSQL déployé via Helm (Bitnami)
-  # Le service est: <release-name>-postgresql = default-cube-backend-postgresql
   databaseUrl: "postgresql+psycopg://postgres:password@default-cube-backend-postgresql:5432/postgres"
 resources:
   limits:
