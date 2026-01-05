@@ -54,7 +54,10 @@ spec:
 
           env:
             - name: DATABASE_URL
-              value: {{ .Values.env.databaseUrl | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "cube-backend.fullname" . }}-config
+                  key: DATABASE_URL
 
           resources:
             requests:
