@@ -41,7 +41,7 @@ postgresql:
 # ---- Le reste du fichier ----
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "cube-backend"
 serviceAccount:
   create: true
   automount: true
