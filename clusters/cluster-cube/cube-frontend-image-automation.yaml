@@ -35,10 +35,10 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  # Référence au GitRepository dédié pour cube-frontend
+  # Référence au GitRepository flux-infra (où sont les charts et values.yaml)
   sourceRef:
     kind: GitRepository
-    name: cube-frontend
+    name: flux-system
   git:
     checkout:
       ref:

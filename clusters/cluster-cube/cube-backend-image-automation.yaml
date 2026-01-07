@@ -78,10 +78,10 @@ metadata:
 spec:
   # Fréquence de vérification des mises à jour à appliquer
   interval: 1m
-  # Référence au GitRepository dédié pour cube-backend
+  # Référence au GitRepository flux-infra (où sont les charts et values.yaml)
   sourceRef:
     kind: GitRepository
-    name: cube-backend
+    name: flux-system
   git:
     # Configuration du checkout
     checkout:
