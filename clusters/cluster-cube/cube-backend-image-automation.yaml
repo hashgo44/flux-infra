@@ -78,10 +78,10 @@ metadata:
 spec:
   # Fréquence de vérification des mises à jour à appliquer
   interval: 1m
-  # Référence au GitRepository Flux (contient l'URL et les credentials)
+  # Référence au GitRepository dédié pour cube-backend
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: cube-backend
   git:
     # Configuration du checkout
     checkout:
@@ -101,6 +101,8 @@ spec:
       branch: main
   update:
     # Chemin où chercher les fichiers à mettre à jour
+    # Si les charts sont dans flux-infra, garder ce path
+    # Si les charts sont dans le repo séparé, ajuster selon la structure
     path: ./clusters/cluster-cube
     # Stratégie "Setters" : cherche les marqueurs {"$imagepolicy": "..."}
     # dans les fichiers YAML et remplace la valeur adjacente

@@ -25,7 +25,7 @@ spec:
       # IMPORTANT: "Revision" redéploie à chaque nouveau commit Git
       # Cela inclut les changements de values.yaml par l'ImageUpdateAutomation
       reconcileStrategy: Revision
-      # Référence au GitRepository Flux (configuré dans flux-system/)
+      # Référence au GitRepository flux-infra (où sont les charts Helm)
       sourceRef:
         kind: GitRepository
         name: flux-system

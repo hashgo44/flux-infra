@@ -1,0 +1,22 @@
+# =============================================================================
+# GIT REPOSITORY - cube-frontend
+# =============================================================================
+# GitRepository dédié pour cube-frontend.
+# Pointe vers le repo Git séparé de cube-frontend.
+# Permet de séparer les déclencheurs de déploiement entre les applications.
+# =============================================================================
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: cube-frontend
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: flux-system
+  url: ssh://git@github.com/hashgo44/cube-frontend.git
+

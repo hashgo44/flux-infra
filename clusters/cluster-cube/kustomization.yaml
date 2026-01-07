@@ -15,6 +15,9 @@ kind: Kustomization
 resources:
   # Configuration Flux (GitRepository, Kustomization controller, etc.)
   - flux-system
+  # GitRepositories dédiés pour chaque application
+  - cube-backend-gitrepository.yaml
+  - cube-frontend-gitrepository.yaml
   # HelmReleases - Déploient les charts Helm des applications
   - cube-backend-helmrelease.yaml
   - cube-frontend-helmrelease.yaml

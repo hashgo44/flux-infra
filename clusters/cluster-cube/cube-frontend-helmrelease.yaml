@@ -8,7 +8,10 @@ spec:
   chart:
     spec:
       chart: ./clusters/cluster-cube/cube-frontend
+      # Revision redéploie à chaque nouveau commit Git
+      # Utile pour détecter les changements de values.yaml par l'ImageUpdateAutomation
       reconcileStrategy: Revision
+      # Référence au GitRepository flux-infra (où sont les charts Helm)
       sourceRef:
         kind: GitRepository
         name: flux-system

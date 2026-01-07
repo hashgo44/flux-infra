@@ -35,9 +35,10 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
+  # Référence au GitRepository dédié pour cube-frontend
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: cube-frontend
   git:
     checkout:
       ref:
