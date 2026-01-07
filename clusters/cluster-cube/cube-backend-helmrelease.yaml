@@ -5,10 +5,6 @@
 # Flux surveille le repo Git et redéploie automatiquement quand :
 # - Le chart Helm change (templates, Chart.yaml)
 # - Les values.yaml changent (y compris le tag d'image mis à jour par l'automation)
-#
-# LIEN AVEC L'IMAGE AUTOMATION:
-# Quand ImageUpdateAutomation commit un nouveau tag dans values.yaml,
-# Flux détecte le changement Git et déclenche un redéploiement via ce HelmRelease.
 # =============================================================================
 
 ---
@@ -20,16 +16,15 @@ metadata:
 spec:
   chart:
     spec:
-      # Chemin vers le chart Helm dans le repo cube-backend
-      chart: ./helm
-      # Revision: redéploie à chaque changement Git dans le repo cube-backend
-      # Isolation complète : seuls les commits dans cube-backend déclenchent ce HelmRelease
+      # Chemin vers le chart Helm dans flux-infra
+      chart: ./clusters/cluster-cube/cube-backend
+      # Revision: redéploie à chaque changement Git détecté
       reconcileStrategy: Revision
-      # Référence au GitRepository SÉPARÉ de cube-backend
+      # Référence au GitRepository flux-infra
       sourceRef:
         kind: GitRepository
-        name: cube-backend
-  # Fréquence de réconciliation (vérifie si l'état désiré = état actuel)
+        name: flux-system
+  # Fréquence de réconciliation
   interval: 5m0s
   # Namespace où stocker les secrets Helm
   storageNamespace: default

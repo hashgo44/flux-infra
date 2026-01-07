@@ -1,3 +1,7 @@
+# =============================================================================
+# FLUX IMAGE AUTOMATION - cube-frontend
+# =============================================================================
+
 ---
 # ImageRepository - Surveille le registry GHCR pour les nouvelles images
 apiVersion: image.toolkit.fluxcd.io/v1beta2
@@ -24,11 +28,10 @@ spec:
     extract: '$ts'
   policy:
     numerical:
-      order: asc  # Le plus grand timestamp = le plus récent
+      order: asc
 
 ---
 # ImageUpdateAutomation - Met à jour automatiquement le repo Git
-# Commit directement dans le repo cube-frontend (isolation complète)
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
@@ -36,10 +39,10 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  # Référence au GitRepository SÉPARÉ de cube-frontend
+  # Référence au GitRepository flux-infra
   sourceRef:
     kind: GitRepository
-    name: cube-frontend
+    name: flux-system
   git:
     checkout:
       ref:
@@ -49,11 +52,10 @@ spec:
         name: fluxcdbot
         email: fluxcdbot@users.noreply.github.com
       messageTemplate: |
-        chore(flux): update image to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
+        chore(flux): update cube-frontend to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
     push:
       branch: main
   update:
-    # Chemin vers le chart Helm dans le repo cube-frontend
-    path: ./helm
+    # Chemin vers le chart cube-frontend dans flux-infra
+    path: ./clusters/cluster-cube/cube-frontend
     strategy: Setters
-

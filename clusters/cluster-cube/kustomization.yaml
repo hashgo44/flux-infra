@@ -2,18 +2,16 @@
 # KUSTOMIZATION - Point d'entrée Flux pour ce cluster
 # =============================================================================
 # Ce fichier liste toutes les ressources que Flux doit appliquer au cluster.
-# Flux réconcilie ces ressources dans l'ordre où elles sont listées.
 #
 # ARCHITECTURE:
 # - flux-system/              → Configuration de base de Flux
-# - *-gitrepository.yaml      → GitRepositories pour les repos applicatifs séparés
+# - cube-backend/             → Chart Helm de l'application backend
+# - cube-frontend/            → Chart Helm de l'application frontend
 # - *-helmrelease.yaml        → Déploiement des applications via Helm
 # - *-image-automation.yaml   → Automatisation des mises à jour d'images
 #
-# ISOLATION:
-# Chaque application a son propre GitRepository, ce qui permet une isolation
-# complète des déploiements. Un commit dans cube-backend ne déclenche que
-# le déploiement de cube-backend.
+# NOTE: Avec cette configuration centralisée, un commit dans flux-infra
+# peut déclencher le redéploiement des deux applications.
 # =============================================================================
 
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -21,14 +19,9 @@ kind: Kustomization
 resources:
   # Configuration Flux (GitRepository flux-system, controllers, etc.)
   - flux-system
-  # GitRepositories - Repos applicatifs séparés (contiennent code + chart Helm)
-  - cube-backend-gitrepository.yaml
-  - cube-frontend-gitrepository.yaml
-  # HelmReleases - Déploient les charts Helm depuis les repos applicatifs
-  # Utilisent reconcileStrategy: Revision pour redéployer à chaque commit
+  # HelmReleases - Déploient les charts Helm des applications
   - cube-backend-helmrelease.yaml
   - cube-frontend-helmrelease.yaml
-  # Image Automation - Surveillent les registries et commitent les nouveaux tags
-  # Commit directement dans les repos applicatifs (isolation complète)
+  # Image Automation - Surveillent les registries et mettent à jour les tags
   - cube-backend-image-automation.yaml
   - cube-frontend-image-automation.yaml

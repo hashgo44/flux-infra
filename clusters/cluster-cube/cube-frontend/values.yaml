@@ -1,0 +1,83 @@
+# Default values for cube-frontend.
+
+name: cube-frontend
+namespace: default
+replicaCount: 2
+image:
+  repository: ghcr.io/hashgo44/cube-frontend
+  pullPolicy: IfNotPresent
+  tag: "main-5929d9e-1767780589" # {"$imagepolicy": "flux-system:cube-frontend:tag"}
+service:
+  name: cube-frontend-service
+  type: ClusterIP
+  port: 3000
+# Port du container
+containerPort: 3000
+# Variables d'environnement
+env:
+  backendUrl: "http://cube-backend-service:8000"
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+# ---- Le reste du fichier ----
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+securityContext: {}
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+    - name: gateway
+      sectionName: http
+  hostnames:
+    - chart-example.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+volumes: []
+volumeMounts: []
+nodeSelector: {}
+tolerations: []
+affinity: {}

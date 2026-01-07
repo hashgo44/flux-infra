@@ -1,3 +1,7 @@
+# =============================================================================
+# FLUX HELM RELEASE - cube-frontend
+# =============================================================================
+
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -7,15 +11,14 @@ metadata:
 spec:
   chart:
     spec:
-      # Chemin vers le chart Helm dans le repo cube-frontend
-      chart: ./helm
-      # Revision: redéploie à chaque changement Git dans le repo cube-frontend
-      # Isolation complète : seuls les commits dans cube-frontend déclenchent ce HelmRelease
+      # Chemin vers le chart Helm dans flux-infra
+      chart: ./clusters/cluster-cube/cube-frontend
+      # Revision: redéploie à chaque changement Git détecté
       reconcileStrategy: Revision
-      # Référence au GitRepository SÉPARÉ de cube-frontend
+      # Référence au GitRepository flux-infra
       sourceRef:
         kind: GitRepository
-        name: cube-frontend
+        name: flux-system
   interval: 5m0s
   storageNamespace: default
   targetNamespace: default
