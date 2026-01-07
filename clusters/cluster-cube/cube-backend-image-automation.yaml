@@ -69,6 +69,9 @@ spec:
 # Quand une nouvelle image est sélectionnée par l'ImagePolicy, ce composant
 # met à jour automatiquement les fichiers YAML du repo Git avec le nouveau tag.
 # Il cherche les marqueurs {"$imagepolicy": "..."} dans les fichiers.
+#
+# IMPORTANT: Met à jour AUSSI appVersion dans Chart.yaml pour déclencher
+# le HelmRelease avec reconcileStrategy: ChartVersion
 # =============================================================================
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
@@ -78,7 +81,7 @@ metadata:
 spec:
   # Fréquence de vérification des mises à jour à appliquer
   interval: 1m
-  # Référence au GitRepository flux-infra (où sont les charts et values.yaml)
+  # Référence au GitRepository flux-infra (centralisé)
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -100,10 +103,8 @@ spec:
     push:
       branch: main
   update:
-    # Chemin où chercher les fichiers à mettre à jour
-    # Si les charts sont dans flux-infra, garder ce path
-    # Si les charts sont dans le repo séparé, ajuster selon la structure
-    path: ./clusters/cluster-cube
+    # Chemin SPÉCIFIQUE au chart cube-backend uniquement
+    path: ./clusters/cluster-cube/cube-backend
     # Stratégie "Setters" : cherche les marqueurs {"$imagepolicy": "..."}
     # dans les fichiers YAML et remplace la valeur adjacente
     strategy: Setters

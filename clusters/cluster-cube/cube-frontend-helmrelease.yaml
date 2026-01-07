@@ -7,11 +7,12 @@ metadata:
 spec:
   chart:
     spec:
+      # Chemin vers le chart Helm dans flux-infra
       chart: ./clusters/cluster-cube/cube-frontend
-      # Revision redéploie à chaque nouveau commit Git
-      # Utile pour détecter les changements de values.yaml par l'ImageUpdateAutomation
-      reconcileStrategy: Revision
-      # Référence au GitRepository flux-infra (où sont les charts Helm)
+      # ChartVersion: ne redéploie que si version ou appVersion change dans Chart.yaml
+      # L'ImageUpdateAutomation met à jour appVersion → déclenche le redéploiement
+      reconcileStrategy: ChartVersion
+      # Référence au GitRepository flux-infra (centralisé)
       sourceRef:
         kind: GitRepository
         name: flux-system

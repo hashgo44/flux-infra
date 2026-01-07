@@ -13,14 +13,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  # Configuration Flux (GitRepository, Kustomization controller, etc.)
+  # Configuration Flux (GitRepository flux-system, Kustomization controller, etc.)
   - flux-system
-  # GitRepositories dédiés pour chaque application
-  - cube-backend-gitrepository.yaml
-  - cube-frontend-gitrepository.yaml
   # HelmReleases - Déploient les charts Helm des applications
+  # Utilisent reconcileStrategy: ChartVersion pour déployer uniquement
+  # quand appVersion change dans le Chart.yaml de chaque application
   - cube-backend-helmrelease.yaml
   - cube-frontend-helmrelease.yaml
   # Image Automation - Surveillent les registries et mettent à jour les tags
+  # Met à jour values.yaml ET Chart.yaml (appVersion) de chaque application
   - cube-backend-image-automation.yaml
   - cube-frontend-image-automation.yaml
