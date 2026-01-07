@@ -6,7 +6,7 @@ replicaCount: 2
 image:
   repository: ghcr.io/hashgo44/cube-frontend
   pullPolicy: IfNotPresent
-  tag: "main-bf84fa4-1767556833" # {"$imagepolicy": "flux-system:cube-frontend:tag"}
+  tag: "main-5929d9e-1767780589" # {"$imagepolicy": "flux-system:cube-frontend:tag"}
 service:
   name: cube-frontend-service
   type: ClusterIP
