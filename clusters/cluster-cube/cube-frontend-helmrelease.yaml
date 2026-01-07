@@ -7,15 +7,15 @@ metadata:
 spec:
   chart:
     spec:
-      # Chemin vers le chart Helm dans flux-infra
-      chart: ./clusters/cluster-cube/cube-frontend
-      # Revision: redéploie à chaque changement Git détecté
-      # Avec les chemins isolés dans ImageUpdateAutomation, seul cube-frontend sera affecté
+      # Chemin vers le chart Helm dans le repo cube-frontend
+      chart: ./helm
+      # Revision: redéploie à chaque changement Git dans le repo cube-frontend
+      # Isolation complète : seuls les commits dans cube-frontend déclenchent ce HelmRelease
       reconcileStrategy: Revision
-      # Référence au GitRepository flux-infra (centralisé)
+      # Référence au GitRepository SÉPARÉ de cube-frontend
       sourceRef:
         kind: GitRepository
-        name: flux-system
+        name: cube-frontend
   interval: 5m0s
   storageNamespace: default
   targetNamespace: default
