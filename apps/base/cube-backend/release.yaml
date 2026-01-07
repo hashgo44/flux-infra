@@ -15,7 +15,7 @@ spec:
   chart:
     spec:
       chart: ./charts/cube-backend
-      reconcileStrategy: Revision
+      reconcileStrategy: ChartVersion
       sourceRef:
         kind: GitRepository
         name: flux-system

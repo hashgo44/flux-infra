@@ -28,6 +28,6 @@ spec:
     push:
       branch: main
   update:
-    path: ./charts/cube-backend
+    path: ./apps/production/cube-backend
     strategy: Setters
 

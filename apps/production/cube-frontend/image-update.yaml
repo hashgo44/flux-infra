@@ -28,6 +28,6 @@ spec:
     push:
       branch: main
   update:
-    path: ./charts/cube-frontend
+    path: ./apps/production/cube-frontend
     strategy: Setters
 
