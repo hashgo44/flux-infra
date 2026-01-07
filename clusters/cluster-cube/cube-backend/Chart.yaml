@@ -5,7 +5,7 @@ type: application
 version: 0.3.4
 # appVersion est mis à jour automatiquement par Flux ImageUpdateAutomation
 # Cela déclenche le HelmRelease (reconcileStrategy: ChartVersion)
-appVersion: "main-6829293-1767790153" # {"$imagepolicy": "flux-system:cube-backend:tag"}
+appVersion: "main-9a70a62-1767791602" # {"$imagepolicy": "flux-system:cube-backend:tag"}
 dependencies:
   - name: postgresql
     version: "15.5.38"
