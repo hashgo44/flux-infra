@@ -22,9 +22,9 @@ spec:
     spec:
       # Chemin vers le chart Helm dans flux-infra
       chart: ./clusters/cluster-cube/cube-backend
-      # ChartVersion: ne redéploie que si version ou appVersion change dans Chart.yaml
-      # L'ImageUpdateAutomation met à jour appVersion → déclenche le redéploiement
-      reconcileStrategy: ChartVersion
+      # Revision: redéploie à chaque changement Git détecté
+      # Avec les chemins isolés dans ImageUpdateAutomation, seul cube-backend sera affecté
+      reconcileStrategy: Revision
       # Référence au GitRepository flux-infra (centralisé)
       sourceRef:
         kind: GitRepository
