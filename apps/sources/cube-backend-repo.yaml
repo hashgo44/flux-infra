@@ -1,0 +1,21 @@
+# =============================================================================
+# GitRepository - cube-backend
+# =============================================================================
+# Source Git séparée pour cube-backend
+# Permet une isolation complète des déploiements
+# =============================================================================
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: cube-backend
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: flux-system
+  url: ssh://git@github.com/hashgo44/cube-backend.git
+

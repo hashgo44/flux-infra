@@ -1,0 +1,39 @@
+# =============================================================================
+# INFRASTRUCTURE - Flux Kustomization pour l'infrastructure
+# =============================================================================
+# Gère les composants d'infrastructure partagés.
+# Exemple: cert-manager, ingress-nginx, sealed-secrets, etc.
+#
+# Décommentez selon vos besoins.
+# =============================================================================
+
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: infrastructure-controllers
+#   namespace: flux-system
+# spec:
+#   interval: 1h
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   path: ./infrastructure/controllers
+#   prune: true
+#   wait: true
+
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: infrastructure-configs
+#   namespace: flux-system
+# spec:
+#   interval: 1h
+#   dependsOn:
+#     - name: infrastructure-controllers
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   path: ./infrastructure/configs
+#   prune: true

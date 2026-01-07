@@ -1,0 +1,40 @@
+# =============================================================================
+# APPS - Flux Kustomizations pour les applications
+# =============================================================================
+# Kustomizations séparées par application pour une isolation complète.
+# Chaque application est surveillée indépendamment.
+# =============================================================================
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cube-backend
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  dependsOn:
+    - name: sources
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./apps/production/cube-backend
+  prune: true
+  wait: true
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cube-frontend
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  dependsOn:
+    - name: sources
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./apps/production/cube-frontend
+  prune: true
+  wait: true

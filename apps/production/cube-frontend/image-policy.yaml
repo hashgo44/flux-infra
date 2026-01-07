@@ -1,0 +1,22 @@
+# =============================================================================
+# ImagePolicy - cube-frontend
+# =============================================================================
+# Sélectionne l'image la plus récente selon le pattern de tag
+# =============================================================================
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: cube-frontend
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: cube-frontend
+  filterTags:
+    pattern: '^main-[a-zA-Z0-9]+-(?P<ts>.*)$'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc
+

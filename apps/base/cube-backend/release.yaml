@@ -1,24 +1,25 @@
 # =============================================================================
-# FLUX HELM RELEASE - cube-frontend
+# HelmRelease - cube-backend (base)
+# =============================================================================
+# Configuration de base du HelmRelease.
+# Les valeurs spécifiques à l'environnement sont dans apps/<env>/cube-backend/
 # =============================================================================
 
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cube-frontend
+  name: cube-backend
   namespace: flux-system
 spec:
   chart:
     spec:
-      # Chemin vers le chart Helm dans flux-infra
-      chart: ./clusters/cluster-cube/cube-frontend
-      # Revision: redéploie à chaque changement Git détecté
+      chart: ./charts/cube-backend
       reconcileStrategy: Revision
-      # Référence au GitRepository flux-infra
       sourceRef:
         kind: GitRepository
         name: flux-system
   interval: 5m0s
   storageNamespace: default
   targetNamespace: default
+

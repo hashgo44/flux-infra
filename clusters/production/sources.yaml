@@ -1,0 +1,21 @@
+# =============================================================================
+# SOURCES - Flux Kustomization pour les sources Git
+# =============================================================================
+# Gère les GitRepositories des applications
+# =============================================================================
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: sources
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./apps/sources
+  prune: true
+  wait: true
+

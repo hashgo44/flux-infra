@@ -1,0 +1,16 @@
+# =============================================================================
+# ImageRepository - cube-frontend
+# =============================================================================
+# Surveille le registry GHCR pour les nouvelles images
+# =============================================================================
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: cube-frontend
+  namespace: flux-system
+spec:
+  image: ghcr.io/hashgo44/cube-frontend
+  interval: 1m
+
