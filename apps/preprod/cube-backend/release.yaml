@@ -11,6 +11,7 @@ metadata:
   name: cube-backend-preprod
   namespace: flux-system
 spec:
+  releaseName: cube-backend-preprod
   chart:
     spec:
       chart: ./charts/cube-backend
