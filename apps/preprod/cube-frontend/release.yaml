@@ -20,6 +20,7 @@ spec:
         kind: GitRepository
         name: flux-system
   interval: 5m0s
+  timeout: 10m
   storageNamespace: preprod
   targetNamespace: preprod
   valuesFrom:
