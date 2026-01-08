@@ -4,6 +4,7 @@
 # Ces valeurs sont fusionnées avec les valeurs de base du chart
 # =============================================================================
 
+namespace: preprod
 replicaCount: 2
 image:
   repository: ghcr.io/hashgo44/cube-backend
