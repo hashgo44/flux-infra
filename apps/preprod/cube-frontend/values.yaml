@@ -1,15 +1,15 @@
 # =============================================================================
-# Values overlay pour cube-frontend sur production
+# Values overlay pour cube-frontend sur preprod
 # =============================================================================
 # Ces valeurs sont fusionnées avec les valeurs de base du chart
 # =============================================================================
 
-namespace: default
+namespace: preprod
 replicaCount: 2
 image:
   repository: ghcr.io/hashgo44/cube-frontend
   pullPolicy: IfNotPresent
-  tag: "main-b55c338-1767797176" # {"$imagepolicy": "flux-system:cube-frontend:tag"}
+  tag: "development-b55c338-1767797176" # {"$imagepolicy": "flux-system:cube-frontend-preprod:tag"}
 resources:
   limits:
     cpu: 500m

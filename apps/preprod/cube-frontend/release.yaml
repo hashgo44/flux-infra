@@ -1,0 +1,29 @@
+# =============================================================================
+# HelmRelease - cube-frontend pour preproduction
+# =============================================================================
+# HelmRelease complet pour l'environnement preprod
+# =============================================================================
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cube-frontend-preprod
+  namespace: flux-system
+spec:
+  releaseName: cube-frontend-preprod
+  chart:
+    spec:
+      chart: ./charts/cube-frontend
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+  interval: 5m0s
+  storageNamespace: preprod
+  targetNamespace: preprod
+  valuesFrom:
+    - kind: ConfigMap
+      name: cube-frontend-values-preprod
+      valuesKey: values.yaml
+      optional: true

@@ -1,0 +1,26 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: cube-frontend-preprod
+  namespace: flux-system
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: |
+        chore(flux): update cube-frontend-preprod to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/preprod/cube-frontend
+    strategy: Setters
