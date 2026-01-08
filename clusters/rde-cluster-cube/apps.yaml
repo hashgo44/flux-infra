@@ -45,7 +45,7 @@ spec:
   interval: 1m0s
   sourceRef:
     kind: GitRepository
-    name: flux-system-development
+    name: flux-system
   path: ./apps/preprod/cube-backend
   prune: true
   wait: true

@@ -8,7 +8,7 @@ spec:
   imageRepositoryRef:
     name: cube-backend-preprod
   filterTags:
-    pattern: '^main-[a-zA-Z0-9]+-(?P<ts>.*)$'
+    pattern: '^development-[a-zA-Z0-9]+-(?P<ts>.*)$'
     extract: '$ts'
   policy:
     numerical:

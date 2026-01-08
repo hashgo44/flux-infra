@@ -8,19 +8,19 @@ spec:
   interval: 1m
   sourceRef:
     kind: GitRepository
-    name: flux-system-development
+    name: flux-system
   git:
     checkout:
       ref:
-        branch: development
+        branch: main
     commit:
       author:
         name: fluxcdbot
         email: fluxcdbot@users.noreply.github.com
       messageTemplate: |
-        chore(flux): update cube-backend to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
+        chore(flux): update cube-backend-preprod to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
     push:
-      branch: development
+      branch: main
   update:
     path: ./apps/preprod/cube-backend
     strategy: Setters
