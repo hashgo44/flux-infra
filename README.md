@@ -31,7 +31,7 @@ Ce repository contient la configuration GitOps pour le déploiement automatique 
 
 ```
 flux-infra/
-├── clusters/production/          # Configuration du cluster production
+├── clusters/rde-cluster-cube/   # Configuration du cluster rde-cluster-cube
 │   ├── apps.yaml                 # Kustomizations pour les applications
 │   ├── sources.yaml              # Kustomizations pour les sources Git
 │   ├── infrastructure.yaml       # Infrastructure partagée
@@ -206,7 +206,7 @@ flux-infra/
 
 Définit la source Git à surveiller.
 
-**Fichier** : `clusters/production/flux-system/gotk-sync.yaml`
+**Fichier** : `clusters/rde-cluster-cube/flux-system/gotk-sync-main.yaml`
 
 ```yaml
 apiVersion: source.toolkit.fluxcd.io/v1
@@ -308,7 +308,7 @@ spec:
 
 Applique les ressources Kubernetes définies dans un répertoire Git.
 
-**Fichier** : `clusters/production/apps.yaml`
+**Fichier** : `clusters/rde-cluster-cube/apps.yaml`
 
 ```yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -360,7 +360,7 @@ spec:
 
 Le projet suit une architecture GitOps avec séparation des préoccupations :
 
-- **`clusters/production/`** : Configuration spécifique au cluster production
+- **`clusters/rde-cluster-cube/`** : Configuration spécifique au cluster rde-cluster-cube
 - **`apps/base/`** : Configurations de base réutilisables (DRY principle)
 - **`apps/production/`** : Overlays spécifiques à l'environnement production
 - **`charts/`** : Helm charts personnalisés pour chaque application

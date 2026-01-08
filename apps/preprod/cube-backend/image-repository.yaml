@@ -1,0 +1,9 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: cube-backend-preprod
+  namespace: flux-system
+spec:
+  image: ghcr.io/hashgo44/cube-backend
+  interval: 1m

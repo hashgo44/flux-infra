@@ -1,0 +1,19 @@
+# =============================================================================
+# HelmRelease overlay - cube-backend pour preproduction
+# =============================================================================
+# Patch le HelmRelease de base avec les valeurs spécifiques au cluster
+# =============================================================================
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cube-backend-preprod
+  namespace: flux-system
+spec:
+  targetNamespace: preprod
+  valuesFrom:
+    - kind: ConfigMap
+      name: cube-backend-values
+      valuesKey: values.yaml
+      optional: true

@@ -1,0 +1,18 @@
+# =============================================================================
+# Values overlay pour cube-backend sur preprod
+# =============================================================================
+# Ces valeurs sont fusionnées avec les valeurs de base du chart
+# =============================================================================
+
+replicaCount: 2
+image:
+  repository: ghcr.io/hashgo44/cube-backend
+  pullPolicy: IfNotPresent
+  tag: "main-a0b5ff0-1767797453" # {"$imagepolicy": "flux-system:cube-backend-preprod:tag"}
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

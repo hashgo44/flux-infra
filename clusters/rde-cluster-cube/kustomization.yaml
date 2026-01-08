@@ -1,5 +1,5 @@
 # =============================================================================
-# KUSTOMIZATION - Point d'entrée Flux pour production
+# KUSTOMIZATION - Point d'entrée Flux pour rde-cluster-cube
 # =============================================================================
 # Ce fichier liste les ressources de base que Flux doit appliquer.
 #

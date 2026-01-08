@@ -34,3 +34,33 @@ spec:
   path: ./apps/production/cube-frontend
   prune: true
   wait: true
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cube-backend-preprod
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system-development
+  path: ./apps/preprod/cube-backend
+  prune: true
+  wait: true
+
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: cube-frontend-preprod
+#   namespace: flux-system
+# spec:
+#   interval: 1m0s
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   path: ./apps/preprod/cube-frontend
+#   prune: true
+#   wait: true
