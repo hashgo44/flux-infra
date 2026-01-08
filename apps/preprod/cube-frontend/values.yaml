@@ -5,6 +5,7 @@
 # =============================================================================
 
 namespace: preprod
+name: cube-frontend-preprod
 fullnameOverride: "cube-frontend-preprod"
 replicaCount: 2
 image:

@@ -5,6 +5,7 @@
 # =============================================================================
 
 namespace: default
+name: cube-backend-prod
 fullnameOverride: "cube-backend-prod"
 replicaCount: 2
 image:
