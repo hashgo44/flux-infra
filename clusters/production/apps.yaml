@@ -12,7 +12,7 @@ metadata:
   name: cube-backend
   namespace: flux-system
 spec:
-  interval: 5m0s
+  interval: 1m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -27,7 +27,7 @@ metadata:
   name: cube-frontend
   namespace: flux-system
 spec:
-  interval: 5m0s
+  interval: 1m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
