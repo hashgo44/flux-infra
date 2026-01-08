@@ -1,7 +1,7 @@
 # =============================================================================
-# HelmRelease overlay - cube-backend pour preproduction
+# HelmRelease - cube-backend pour preproduction
 # =============================================================================
-# Patch le HelmRelease de base avec les valeurs spécifiques au cluster
+# HelmRelease complet pour l'environnement preprod
 # =============================================================================
 
 ---
@@ -11,6 +11,15 @@ metadata:
   name: cube-backend-preprod
   namespace: flux-system
 spec:
+  chart:
+    spec:
+      chart: ./charts/cube-backend
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+  interval: 5m0s
+  storageNamespace: preprod
   targetNamespace: preprod
   valuesFrom:
     - kind: ConfigMap
