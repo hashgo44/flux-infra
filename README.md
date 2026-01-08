@@ -40,18 +40,42 @@ flux-infra/
 ├── apps/
 │   ├── base/                     # Configurations de base (réutilisables)
 │   │   ├── cube-backend/
+│   │   │   ├── kustomization.yaml
+│   │   │   ├── namespace.yaml
+│   │   │   └── release.yaml
 │   │   └── cube-frontend/
+│   │       ├── kustomization.yaml
+│   │       ├── namespace.yaml
+│   │       └── release.yaml
 │   │
-│   ├── production/               # Overlays pour l'environnement production
-│   │   ├── cube-backend/
-│   │   │   ├── image-repository.yaml    # Surveillance du registry
-│   │   │   ├── image-policy.yaml        # Politique de sélection d'images
-│   │   │   ├── image-update.yaml        # Mise à jour automatique
-│   │   │   ├── values.yaml              # Valeurs Helm spécifiques
-│   │   │   └── kustomization.yaml       # Kustomization de l'app
-│   │   └── cube-frontend/
-│   │
-│   └── sources/                  # GitRepositories pour les apps
+│   └── production/               # Overlays pour l'environnement production
+│       ├── cube-backend/
+│       │   ├── image-repository.yaml    # Surveillance du registry
+│       │   ├── image-policy.yaml        # Politique de sélection d'images
+│       │   ├── image-update.yaml        # Mise à jour automatique
+│       │   ├── values.yaml              # Valeurs Helm spécifiques
+│       │   ├── kustomization.yaml       # Kustomization de l'app
+│       │   └── release.yaml             # Patch du HelmRelease
+│       └── cube-frontend/
+│           ├── image-repository.yaml
+│           ├── image-policy.yaml
+│           ├── image-update.yaml
+│           ├── values.yaml
+│           ├── kustomization.yaml
+│           └── release.yaml
+│
+│   └── sources/                  # GitRepositories pour les applications
+│       ├── kustomization.yaml
+│       ├── cube-backend-repo.yaml
+│       └── cube-frontend-repo.yaml
+│
+├── infrastructure/               # Infrastructure partagée
+│   ├── configs/
+│   │   └── kustomization.yaml
+│   ├── controllers/
+│   │   └── kustomization.yaml
+│   └── sources/
+│       └── kustomization.yaml
 │
 └── charts/                       # Helm charts personnalisés
     ├── cube-backend/
