@@ -8,7 +8,7 @@ replicaCount: 2
 image:
   repository: ghcr.io/hashgo44/cube-backend
   pullPolicy: IfNotPresent
-  tag: "main-a0b5ff0-1767797453" # {"$imagepolicy": "flux-system:cube-backend:tag"}
+  tag: "main-a021d68-1767866796" # {"$imagepolicy": "flux-system:cube-backend:tag"}
 resources:
   limits:
     cpu: 500m
