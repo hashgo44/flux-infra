@@ -78,7 +78,37 @@ flux-infra/
 │
 └── charts/                       # Helm charts personnalisés
     ├── cube-backend/
+    │   ├── Chart.yaml
+    │   ├── Chart.lock
+    │   ├── values.yaml
+    │   ├── charts/
+    │   │   └── postgresql-15.5.38.tgz
+    │   └── templates/
+    │       ├── _helpers.tpl
+    │       ├── configmap.yaml
+    │       ├── deployment.yaml
+    │       ├── hpa.yaml
+    │       ├── httproute.yaml
+    │       ├── ingress.yaml
+    │       ├── NOTES.txt
+    │       ├── service.yaml
+    │       ├── serviceaccount.yaml
+    │       └── tests/
+    │           └── test-connection.yaml
     └── cube-frontend/
+        ├── Chart.yaml
+        ├── values.yaml
+        └── templates/
+            ├── _helpers.tpl
+            ├── deployment.yaml
+            ├── hpa.yaml
+            ├── httproute.yaml
+            ├── ingress.yaml
+            ├── NOTES.txt
+            ├── service.yaml
+            ├── serviceaccount.yaml
+            └── tests/
+                └── test-connection.yaml
 ```
 
 ---
