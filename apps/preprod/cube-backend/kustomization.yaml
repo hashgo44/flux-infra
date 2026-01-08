@@ -8,7 +8,7 @@ resources:
   - image-update.yaml
   - release.yaml
 configMapGenerator:
-  - name: cube-backend-values
+  - name: cube-backend-values-preprod
     files:
       - values.yaml
 generatorOptions:

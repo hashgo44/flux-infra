@@ -9,7 +9,7 @@ resources:
 patchesStrategicMerge:
   - release.yaml
 configMapGenerator:
-  - name: cube-backend-values
+  - name: cube-backend-values-production
     files:
       - values.yaml
 generatorOptions:

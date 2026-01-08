@@ -24,6 +24,6 @@ spec:
   targetNamespace: preprod
   valuesFrom:
     - kind: ConfigMap
-      name: cube-backend-values
+      name: cube-backend-values-preprod
       valuesKey: values.yaml
       optional: true

@@ -13,7 +13,7 @@ metadata:
 spec:
   valuesFrom:
     - kind: ConfigMap
-      name: cube-backend-values
+      name: cube-backend-values-production
       valuesKey: values.yaml
       optional: true
 
