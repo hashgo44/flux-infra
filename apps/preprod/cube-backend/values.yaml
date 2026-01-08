@@ -10,6 +10,8 @@ image:
   repository: ghcr.io/hashgo44/cube-backend
   pullPolicy: IfNotPresent
   tag: "development-f61535f-1767866870" # {"$imagepolicy": "flux-system:cube-backend-preprod:tag"}
+env:
+  databaseUrl: "postgresql+psycopg://postgres:password@cube-backend-preprod-postgresql:5432/postgres"
 resources:
   limits:
     cpu: 500m
