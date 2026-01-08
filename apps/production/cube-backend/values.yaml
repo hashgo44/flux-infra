@@ -5,6 +5,7 @@
 # =============================================================================
 
 namespace: default
+fullnameOverride: "cube-backend-prod"
 replicaCount: 2
 image:
   repository: ghcr.io/hashgo44/cube-backend
