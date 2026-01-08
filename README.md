@@ -41,12 +41,11 @@ flux-infra/
 │   ├── base/                     # Configurations de base (réutilisables)
 │   │   ├── cube-backend/
 │   │   │   ├── kustomization.yaml
-│   │   │   ├── namespace.yaml
-│   │   │   └── release.yaml
+│   │   │   └── release.yaml   
 │   │   └── cube-frontend/
 │   │       ├── kustomization.yaml
-│   │       ├── namespace.yaml
 │   │       └── release.yaml
+│   │       
 │   │
 │   ├── production/               # Overlays pour l'environnement production
 │   │   ├── cube-backend/
