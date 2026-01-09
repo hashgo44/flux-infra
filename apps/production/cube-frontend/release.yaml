@@ -11,6 +11,10 @@ metadata:
   name: cube-frontend
   namespace: flux-system
 spec:
+  interval: 1m0s
+  releaseName: cube-frontend-prod
+  storageNamespace: default
+  targetNamespace: default
   valuesFrom:
     - kind: ConfigMap
       name: cube-frontend-values-production

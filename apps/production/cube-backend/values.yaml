@@ -13,7 +13,7 @@ image:
   pullPolicy: IfNotPresent
   tag: "main-bca029c-1767946726" # {"$imagepolicy": "flux-system:cube-backend:tag"}
 env:
-  databaseUrl: "postgresql+psycopg://postgres:password@cube-backend-prod-postgresql:5432/postgres"
+  databaseUrl: "postgresql+psycopg://postgres:password@default-cube-backend-prod-postgresql:5432/postgres"
 resources:
   limits:
     cpu: 500m
