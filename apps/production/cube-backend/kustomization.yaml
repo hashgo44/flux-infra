@@ -8,6 +8,14 @@ resources:
   - image-update.yaml
 patchesStrategicMerge:
   - release.yaml
+patches:
+  - target:
+      kind: HelmRelease
+      name: cube-backend
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: cube-backend-prod
 configMapGenerator:
   - name: cube-backend-values-production
     files:

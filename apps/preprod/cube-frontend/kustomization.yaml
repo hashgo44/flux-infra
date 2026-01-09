@@ -9,6 +9,14 @@ resources:
   - image-update.yaml
 patchesStrategicMerge:
   - release.yaml
+patches:
+  - target:
+      kind: HelmRelease
+      name: cube-frontend
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: cube-frontend-preprod
 configMapGenerator:
   - name: cube-frontend-values-preprod
     files:
