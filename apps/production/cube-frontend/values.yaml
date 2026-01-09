@@ -11,7 +11,7 @@ replicaCount: 2
 image:
   repository: ghcr.io/hashgo44/cube-frontend
   pullPolicy: IfNotPresent
-  tag: "main-c5f58c6-1767870075" # {"$imagepolicy": "flux-system:cube-frontend:tag"}
+  tag: "main-3f3ddf9-1767966609" # {"$imagepolicy": "flux-system:cube-frontend:tag"}
 resources:
   limits:
     cpu: 500m
