@@ -11,6 +11,7 @@ metadata:
   name: cube-backend
   namespace: flux-system
 spec:
+  interval: 1m0s
   releaseName: cube-backend-preprod
   storageNamespace: preprod
   targetNamespace: preprod
