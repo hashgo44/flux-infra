@@ -45,7 +45,24 @@ flux-infra/
 │   │   └── cube-frontend/
 │   │       ├── kustomization.yaml
 │   │       └── release.yaml
-│   │       
+│   │
+│   ├── preprod/                  # Overlays pour l'environnement preprod
+│   │   ├── cube-backend/
+│   │   │   ├── namespace.yaml            # Namespace preprod
+│   │   │   ├── image-repository.yaml     # Surveillance du registry
+│   │   │   ├── image-policy.yaml         # Politique de sélection d'images
+│   │   │   ├── image-update.yaml         # Mise à jour automatique
+│   │   │   ├── values.yaml               # Valeurs Helm spécifiques
+│   │   │   ├── kustomization.yaml        # Kustomization de l'app
+│   │   │   └── release.yaml              # Patch du HelmRelease
+│   │   └── cube-frontend/
+│   │       ├── namespace.yaml
+│   │       ├── image-repository.yaml
+│   │       ├── image-policy.yaml
+│   │       ├── image-update.yaml
+│   │       ├── values.yaml
+│   │       ├── kustomization.yaml
+│   │       └── release.yaml
 │   │
 │   ├── production/               # Overlays pour l'environnement production
 │   │   ├── cube-backend/
