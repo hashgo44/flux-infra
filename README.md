@@ -135,84 +135,154 @@ flux-infra/
 ### Schéma complet
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                    FLUX DE DÉPLOIEMENT AUTOMATIQUE                      │
-└─────────────────────────────────────────────────────────────────────────┘
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║              FLUX DE DÉPLOIEMENT AUTOMATIQUE - CUBE-BACKEND                    ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 
-1️⃣  DÉVELOPPEUR
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 1 : DÉVELOPPEUR + CI/CD                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Push code sur cube-backend repository
+    │  📝 Push code → cube-backend repository (GitHub)
     │
-    └─> CI/CD GitHub Actions
-         │
-         ├─> Build l'image Docker
-         │
-         └─> Push image sur GHCR (GitHub Container Registry)
-              │
-              └─> Tag: main-abc-1234567890
-                   │
-                   ⏱️  Temps variable (dépend du CI/CD)
-                   │
+    │  ⚙️  CI/CD GitHub Actions
+    │     ├─ Build image Docker
+    │     └─ Push → GHCR (ghcr.io/hashgo44/cube-backend)
+    │         └─ Tag: main-abc-1234567890
+    │
+    ⏱️  Temps variable (dépend du CI/CD)
+    │
+    ▼
 
-2️⃣  ImageRepository (interval: 1m)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 2 : ImageRepository                                                  │
+│  📁 apps/production/cube-backend/image-repository.yaml                      │
+│  📁 apps/preprod/cube-backend/image-repository.yaml                         │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Vérifie GHCR toutes les 1 minute
+    │  🔍 Interval: 1m
+    │  ├─ Vérifie GHCR toutes les 1 minute
+    │  └─ Détecte la nouvelle image
     │
-    └─> Détecte la nouvelle image
-         │
-         ⏱️  Délai max: 1 minute
-         │
+    ⏱️  Délai max: 1 minute
+    │
+    ▼
 
-3️⃣  ImagePolicy
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 3 : ImagePolicy                                                      │
+│  📁 apps/production/cube-backend/image-policy.yaml                          │
+│  📁 apps/preprod/cube-backend/image-policy.yaml                             │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Filtre les tags selon pattern: ^main-[a-zA-Z0-9]+-(?P<ts>.*)$
+    │  🎯 Pattern: ^main-[a-zA-Z0-9]+-(?P<ts>.*)$
+    │  ├─ Filtre les tags selon le pattern
+    │  └─ Sélectionne la version la plus récente (ordre numérique ascendant)
     │
-    └─> Sélectionne la version la plus récente (ordre numérique ascendant)
-         │
+    ▼
 
-4️⃣  ImageUpdateAutomation (interval: 1m)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 4 : ImageUpdateAutomation                                            │
+│  📁 apps/production/cube-backend/image-update.yaml                          │
+│  📁 apps/preprod/cube-backend/image-update.yaml                             │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Met à jour values.yaml avec le nouveau tag
+    │  🔄 Interval: 1m
+    │  ├─ Met à jour: apps/production/cube-backend/values.yaml
+    │  │              apps/preprod/cube-backend/values.yaml
+    │  ├─ Commit dans flux-infra repository
+    │  └─ Push sur branch main
     │
-    ├─> Commit dans flux-infra repository
+    ⏱️  Délai max: 1 minute
     │
-    └─> Push sur branch main
-         │
-         ⏱️  Délai max: 1 minute
-         │
+    ▼
 
-5️⃣  GitRepository flux-system (interval: 1m)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 5 : GitRepository                                                    │
+│  📁 clusters/rde-cluster-cube/flux-system/gotk-sync-main.yaml              │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Synchronise flux-infra repository toutes les 1 minute
+    │  📥 Interval: 1m
+    │  ├─ Synchronise flux-infra repository toutes les 1 minute
+    │  └─ Récupère le commit avec le nouveau tag
     │
-    └─> Récupère le commit avec le nouveau tag
-         │
-         ⏱️  Délai max: 1 minute
-         │
+    ⏱️  Délai max: 1 minute
+    │
+    ▼
 
-6️⃣  Kustomization cube-backend (interval: 1m0s)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 6 : Kustomization                                                    │
+│  📁 clusters/rde-cluster-cube/apps.yaml                                     │
+│     └─ Path: ./apps/production/cube-backend                                  │
+│     └─ Path: ./apps/preprod/cube-backend                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Applique les changements au cluster toutes les 1 minute
+    │  ⚙️  Interval: 1m0s
+    │  ├─ Applique les changements au cluster toutes les 1 minute
+    │  ├─ Met à jour le HelmRelease
+    │  └─ Déploie la nouvelle version
     │
-    ├─> Met à jour le HelmRelease
+    ⏱️  Délai max: 1 minute
     │
-    └─> Déploie la nouvelle version
-         │
-         ⏱️  Délai max: 1 minute
-         │
+    ▼
 
-7️⃣  HelmRelease (interval: 5m0s)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 7 : HelmRelease                                                      │
+│  📁 apps/base/cube-backend/release.yaml                                     │
+│  📁 apps/production/cube-backend/release.yaml (patch)                       │
+│  📁 apps/preprod/cube-backend/release.yaml (patch)                         │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Applique le Helm chart mis à jour
+    │  📦 Interval: 5m0s
+    │  ├─ Applique le Helm chart mis à jour
+    │  │  └─ Chart: ./charts/cube-backend
+    │  └─ Rolling update du Deployment
     │
-    └─> Rolling update du Deployment
-         │
+    ▼
 
-8️⃣  KUBERNETES CLUSTER
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ÉTAPE 8 : KUBERNETES CLUSTER                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
     │
-    ├─> Rolling update du Deployment
+    │  🚀 Rolling update du Deployment
+    │  └─ ✅ Nouvelle version déployée !
     │
-    └─> ✅ Nouvelle version déployée !
+    ▼
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║  RÉSUMÉ DES FICHIERS CLÉS                                                     ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║  🔹 ImageRepository:                                                         ║
+║     • apps/production/cube-backend/image-repository.yaml                     ║
+║     • apps/preprod/cube-backend/image-repository.yaml                        ║
+║                                                                               ║
+║  🔹 ImagePolicy:                                                              ║
+║     • apps/production/cube-backend/image-policy.yaml                          ║
+║     • apps/preprod/cube-backend/image-policy.yaml                             ║
+║                                                                               ║
+║  🔹 ImageUpdateAutomation:                                                    ║
+║     • apps/production/cube-backend/image-update.yaml                          ║
+║     • apps/preprod/cube-backend/image-update.yaml                             ║
+║                                                                               ║
+║  🔹 Values (mis à jour automatiquement):                                      ║
+║     • apps/production/cube-backend/values.yaml                                ║
+║     • apps/preprod/cube-backend/values.yaml                                   ║
+║                                                                               ║
+║  🔹 GitRepository:                                                           ║
+║     • clusters/rde-cluster-cube/flux-system/gotk-sync-main.yaml              ║
+║                                                                               ║
+║  🔹 Kustomization:                                                           ║
+║     • clusters/rde-cluster-cube/apps.yaml                                    ║
+║                                                                               ║
+║  🔹 HelmRelease:                                                              ║
+║     • apps/base/cube-backend/release.yaml                                    ║
+║     • apps/production/cube-backend/release.yaml                              ║
+║     • apps/preprod/cube-backend/release.yaml                                 ║
+║                                                                               ║
+║  🔹 Helm Chart:                                                               ║
+║     • charts/cube-backend/                                                    ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
 
 ---
