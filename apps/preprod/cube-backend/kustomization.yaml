@@ -2,10 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
+  - ../../base/cube-backend
   - namespace.yaml
   - image-repository.yaml
   - image-policy.yaml
   - image-update.yaml
+patchesStrategicMerge:
   - release.yaml
 configMapGenerator:
   - name: cube-backend-values-preprod
