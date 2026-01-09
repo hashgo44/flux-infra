@@ -136,11 +136,11 @@ flux-infra/
 
 ```
 ╔═══════════════════════════════════════════════════════════════════════════════╗
-║              FLUX DE DÉPLOIEMENT AUTOMATIQUE - CUBE-BACKEND                    ║
+║              FLUX DE DÉPLOIEMENT AUTOMATIQUE - CUBE-BACKEND                   ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  ÉTAPE 1 : DÉVELOPPEUR + CI/CD                                             │
+│  ÉTAPE 1 : DÉVELOPPEUR + CI/CD                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
     │
     │  📝 Push code → cube-backend repository (GitHub)
@@ -156,8 +156,8 @@ flux-infra/
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  ÉTAPE 2 : ImageRepository                                                  │
-│  📁 apps/production/cube-backend/image-repository.yaml                      │
-│  📁 apps/preprod/cube-backend/image-repository.yaml                         │
+│  apps/production/cube-backend/image-repository.yaml                         │
+│  apps/preprod/cube-backend/image-repository.yaml                            │
 └─────────────────────────────────────────────────────────────────────────────┘
     │
     │  🔍 Interval: 1m
@@ -170,8 +170,8 @@ flux-infra/
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  ÉTAPE 3 : ImagePolicy                                                      │
-│  📁 apps/production/cube-backend/image-policy.yaml                          │
-│  📁 apps/preprod/cube-backend/image-policy.yaml                             │
+│  apps/production/cube-backend/image-policy.yaml                             │
+│  apps/preprod/cube-backend/image-policy.yaml                                │
 └─────────────────────────────────────────────────────────────────────────────┘
     │
     │  🎯 Pattern: ^main-[a-zA-Z0-9]+-(?P<ts>.*)$
@@ -182,8 +182,8 @@ flux-infra/
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  ÉTAPE 4 : ImageUpdateAutomation                                            │
-│  📁 apps/production/cube-backend/image-update.yaml                          │
-│  📁 apps/preprod/cube-backend/image-update.yaml                             │
+│  apps/production/cube-backend/image-update.yaml                             │
+│  apps/preprod/cube-backend/image-update.yaml                                │
 └─────────────────────────────────────────────────────────────────────────────┘
     │
     │  🔄 Interval: 1m
@@ -198,7 +198,7 @@ flux-infra/
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  ÉTAPE 5 : GitRepository                                                    │
-│  📁 clusters/rde-cluster-cube/flux-system/gotk-sync-main.yaml              │
+│  clusters/rde-cluster-cube/flux-system/gotk-sync-main.yaml                  │
 └─────────────────────────────────────────────────────────────────────────────┘
     │
     │  📥 Interval: 1m
@@ -211,8 +211,8 @@ flux-infra/
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  ÉTAPE 6 : Kustomization                                                    │
-│  📁 clusters/rde-cluster-cube/apps.yaml                                     │
-│     └─ Path: ./apps/production/cube-backend                                  │
+│  clusters/rde-cluster-cube/apps.yaml                                        │
+│     └─ Path: ./apps/production/cube-backend                                 │
 │     └─ Path: ./apps/preprod/cube-backend                                    │
 └─────────────────────────────────────────────────────────────────────────────┘
     │
@@ -227,9 +227,9 @@ flux-infra/
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  ÉTAPE 7 : HelmRelease                                                      │
-│  📁 apps/base/cube-backend/release.yaml                                     │
-│  📁 apps/production/cube-backend/release.yaml (patch)                       │
-│  📁 apps/preprod/cube-backend/release.yaml (patch)                         │
+│  apps/base/cube-backend/release.yaml                                        │
+│  apps/production/cube-backend/release.yaml (patch)                          │
+│  apps/preprod/cube-backend/release.yaml (patch)                             │
 └─────────────────────────────────────────────────────────────────────────────┘
     │
     │  📦 Interval: 5m0s
@@ -252,34 +252,34 @@ flux-infra/
 ║  RÉSUMÉ DES FICHIERS CLÉS                                                     ║
 ╠═══════════════════════════════════════════════════════════════════════════════╣
 ║                                                                               ║
-║  🔹 ImageRepository:                                                         ║
-║     • apps/production/cube-backend/image-repository.yaml                     ║
-║     • apps/preprod/cube-backend/image-repository.yaml                        ║
+║     ImageRepository:                                                          ║
+║     • apps/production/cube-backend/image-repository.yaml                      ║
+║     • apps/preprod/cube-backend/image-repository.yaml                         ║
 ║                                                                               ║
-║  🔹 ImagePolicy:                                                              ║
+║    ImagePolicy:                                                               ║
 ║     • apps/production/cube-backend/image-policy.yaml                          ║
 ║     • apps/preprod/cube-backend/image-policy.yaml                             ║
 ║                                                                               ║
-║  🔹 ImageUpdateAutomation:                                                    ║
+║    ImageUpdateAutomation:                                                     ║
 ║     • apps/production/cube-backend/image-update.yaml                          ║
 ║     • apps/preprod/cube-backend/image-update.yaml                             ║
 ║                                                                               ║
-║  🔹 Values (mis à jour automatiquement):                                      ║
+║    Values (mis à jour automatiquement):                                       ║
 ║     • apps/production/cube-backend/values.yaml                                ║
 ║     • apps/preprod/cube-backend/values.yaml                                   ║
 ║                                                                               ║
-║  🔹 GitRepository:                                                           ║
-║     • clusters/rde-cluster-cube/flux-system/gotk-sync-main.yaml              ║
+║    GitRepository:                                                             ║
+║     • clusters/rde-cluster-cube/flux-system/gotk-sync-main.yaml               ║
 ║                                                                               ║
-║  🔹 Kustomization:                                                           ║
-║     • clusters/rde-cluster-cube/apps.yaml                                    ║
+║    Kustomization:                                                             ║
+║     • clusters/rde-cluster-cube/apps.yaml                                     ║
 ║                                                                               ║
-║  🔹 HelmRelease:                                                              ║
-║     • apps/base/cube-backend/release.yaml                                    ║
-║     • apps/production/cube-backend/release.yaml                              ║
-║     • apps/preprod/cube-backend/release.yaml                                 ║
+║    HelmRelease:                                                               ║
+║     • apps/base/cube-backend/release.yaml                                     ║
+║     • apps/production/cube-backend/release.yaml                               ║
+║     • apps/preprod/cube-backend/release.yaml                                  ║
 ║                                                                               ║
-║  🔹 Helm Chart:                                                               ║
+║    Helm Chart:                                                                ║
 ║     • charts/cube-backend/                                                    ║
 ║                                                                               ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
