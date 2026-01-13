@@ -1,0 +1,15 @@
+grafana:
+  sidecar:
+    dashboards:
+      enabled: true
+
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      url: http://loki:3100
+      access: proxy
+      isDefault: false
+
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 30s
