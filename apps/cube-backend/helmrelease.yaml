@@ -1,0 +1,39 @@
+# =============================================================================
+# HelmRelease - cube-backend
+# =============================================================================
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cube-backend
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  releaseName: cube-backend
+  storageNamespace: default
+  targetNamespace: default
+  chart:
+    spec:
+      chart: ./charts/cube-backend
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+  values:
+    namespace: default
+    name: cube-backend
+    fullnameOverride: "cube-backend"
+    replicaCount: 2
+    image:
+      repository: ghcr.io/hashgo44/cube-backend
+      pullPolicy: IfNotPresent
+      tag: "main-bca029c-1767946726" # {"$imagepolicy": "flux-system:cube-backend:tag"}
+    env:
+      databaseUrl: "postgresql+psycopg://postgres:password@cube-backend-postgresql:5432/postgres"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi

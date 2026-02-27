@@ -1,5 +1,5 @@
 # =============================================================================
-# ImageUpdateAutomation - cube-frontend
+# ImageUpdateAutomation - cube-backend
 # =============================================================================
 # Commit automatique des nouveaux tags dans le repo Git
 # =============================================================================
@@ -8,7 +8,7 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
-  name: cube-frontend
+  name: cube-backend
   namespace: flux-system
 spec:
   interval: 1m
@@ -24,10 +24,10 @@ spec:
         name: fluxcdbot
         email: fluxcdbot@users.noreply.github.com
       messageTemplate: |
-        chore(flux): update cube-frontend to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
+        chore(flux): update cube-backend to {{range .Changed.Changes}}{{println .NewValue}}{{end}}
     push:
       branch: main
   update:
-    path: ./apps/production/cube-frontend
+    path: ./apps/cube-backend
     strategy: Setters
 

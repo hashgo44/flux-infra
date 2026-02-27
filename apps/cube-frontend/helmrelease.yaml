@@ -1,0 +1,37 @@
+# =============================================================================
+# HelmRelease - cube-frontend
+# =============================================================================
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cube-frontend
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  releaseName: cube-frontend
+  storageNamespace: default
+  targetNamespace: default
+  chart:
+    spec:
+      chart: ./charts/cube-frontend
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+  values:
+    namespace: default
+    name: cube-frontend
+    fullnameOverride: "cube-frontend"
+    replicaCount: 2
+    image:
+      repository: ghcr.io/hashgo44/cube-frontend
+      pullPolicy: IfNotPresent
+      tag: "main-3f3ddf9-1767966609" # {"$imagepolicy": "flux-system:cube-frontend:tag"}
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi

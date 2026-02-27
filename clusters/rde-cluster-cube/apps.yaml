@@ -1,8 +1,7 @@
 # =============================================================================
 # APPS - Flux Kustomizations pour les applications
 # =============================================================================
-# Kustomizations séparées par application pour une isolation complète.
-# Chaque application est surveillée indépendamment.
+# Configuration simplifiée : un dossier par application
 # =============================================================================
 
 ---
@@ -16,7 +15,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/production/cube-backend
+  path: ./apps/cube-backend
   prune: true
   wait: true
 
@@ -31,6 +30,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/production/cube-frontend
+  path: ./apps/cube-frontend
   prune: true
   wait: true
