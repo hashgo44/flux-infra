@@ -23,7 +23,7 @@ spec:
     image:
       repository: ghcr.io/hashgo44/cube-backend
       pullPolicy: IfNotPresent
-      tag: "main-bfba87c-1772612532" # {"$imagepolicy": "flux-system:cube-backend:tag"}
+      tag: "main-2f5a82b-1772614265" # {"$imagepolicy": "flux-system:cube-backend:tag"}
     env:
       databaseUrl: "postgresql+psycopg://postgres:password@cube-backend-postgresql:5432/postgres"
     resources:
